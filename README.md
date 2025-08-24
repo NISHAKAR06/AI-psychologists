@@ -1,125 +1,106 @@
-# Full-Stack Web Application with Django, FastAPI, and React
+# AI-Psychologists
 
-This repository contains a full-stack web application featuring a Django backend for core functionalities, a FastAPI backend for AI model integration, and a frontend built with React.
-
-## Table of Contents
-
-- [Project Overview](#project-overview)
-- [Technologies Used](#technologies-used)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [Backend Setup](#backend-setup)
-  - [Frontend Setup](#frontend-setup)
-- [Running the Application](#running-the-application)
-- [Accessing the Application](#accessing-the-application)
-
-## Project Overview
-
-This project is a modern web application featuring:
-
--   **Main Backend**: A robust API built with Django, handling core application logic, data storage, and WebSocket communication.
--   **AI Backend**: A lightweight FastAPI server dedicated to serving AI models.
--   **Frontend**: A dynamic and responsive user interface created with React, Vite, and Tailwind CSS.
-
-## Technologies Used
-
-### Backend
-
--   [Django](https://www.djangoproject.com/) & [Django Channels](https://channels.readthedocs.io/en/stable/) (Main Server)
--   [FastAPI](https://fastapi.tiangolo.com/) (AI Model Server)
--   [Python 3.x](https://www.python.org/)
-
-### Frontend
-
--   [React](https://reactjs.org/)
--   [Vite](https://vitejs.dev/)
--   [Tailwind CSS](https://tailwindcss.com/)
--   [React Router](https://reactrouter.com/)
--   [Axios](https://axios-http.com/)
-
-## Prerequisites
-
-Before you begin, ensure you have the following installed on your system:
-
--   [Python](https://www.python.org/downloads/) (version 3.8 or higher)
--   [Node.js](https://nodejs.org/) (version 14 or higher) and [Yarn](https://yarnpkg.com/)
--   A configured database (default is SQLite)
+This is a full-stack web application that provides a platform for users to interact with AI-powered psychologists. The application is built with a React frontend and a Python backend using Django and FastAPI.
 
 ## Getting Started
 
-Follow these steps to set up the project locally.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Backend Setup
+### Prerequisites
 
-1.  **Navigate to the backend directory:**
-    ```bash
-    cd backend
-    ```
+- Node.js and npm (or yarn)
+- Python 3.x and pip
 
-2.  **Create and activate a virtual environment:**
-    ```bash
-    # For Windows
-    python -m venv venv
-    venv\\Scripts\\activate
+### Installation
 
-    # For macOS/Linux
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+**Frontend**
 
-3.  **Install the required Python packages:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-### Frontend Setup
-
-1.  **Navigate to the frontend directory:**
-    ```bash
+1.  Navigate to the `frontend` directory:
+    ```sh
     cd frontend
     ```
-
-2.  **Install the required Node.js packages:**
-    ```bash
+2.  Install the dependencies:
+    ```sh
+    npm install
+    ```
+    or
+    ```sh
     yarn install
     ```
 
-## Running the Application
+**Backend**
 
-You will need to run the Django, FastAPI, and frontend servers in separate terminals.
-
-1.  **Run the Main Backend Server (Django with Channels):**
-    -   Navigate to the `backend` directory.
-    -   Ensure your virtual environment is activated.
-    -   Apply the database migrations:
-        ```bash
-        python manage.py migrate
+1.  Navigate to the `backend` directory:
+    ```sh
+    cd backend
+    ```
+2.  Create a virtual environment:
+    ```sh
+    python -m venv venv
+    ```
+3.  Activate the virtual environment:
+    -   On Windows:
+        ```sh
+        venv\Scripts\activate
         ```
-    -   Start the Django ASGI server using Uvicorn:
-        ```bash
-        uvicorn main_backend.asgi:application --reload --port 8000
+    -   On macOS and Linux:
+        ```sh
+        source venv/bin/activate
         ```
-    -   The main backend API will be running at `http://127.0.0.1:8000`.
+4.  Install the dependencies:
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-2.  **Run the AI Backend Server (FastAPI):**
-    -   Navigate to the `backend` directory.
-    -   Ensure your virtual environment is activated.
-    -   Start the FastAPI server using Uvicorn on a different port (e.g., 8001):
-        ```bash
-        uvicorn main_backend.fastapi_app:app --reload --port 8001
-        ```
-    -   The AI backend will be running at `http://127.0.0.1:8001`.
+## Running the application
 
-3.  **Run the Frontend Development Server:**
-    -   Navigate to the `frontend` directory.
-    -   Start the Vite development server:
-        ```bash
-        yarn dev
-        ```
-    -   The frontend application will be accessible in your browser. The terminal will display the local URL, typically `http://localhost:5173`.
+**Frontend**
 
-## Accessing the Application
+1.  Navigate to the `frontend` directory:
+    ```sh
+    cd frontend
+    ```
+2.  Start the development server:
+    ```sh
+    npm run dev
+    ```
+    The application will be available at `http://localhost:5173`.
 
--   **API Endpoints**: The API endpoints are available under the `/api/` path. For example, `http://127.0.0.1:8000/api/psychologists/`.
--   **Django Admin**: You can access the Django admin interface at `http://127.0.0.1:8000/admin/`. You will need to create a superuser first: `python manage.py createsuperuser`.
--   **Web Application**: Open your web browser and navigate to the URL provided by the Vite development server (e.g., `http://localhost:5173`) to use the application.
+**Backend**
+
+1.  Navigate to the `backend` directory:
+    ```sh
+    cd backend
+    ```
+2.  Start the Django development server:
+    ```sh
+    python manage.py runserver
+    ```
+    The Django API will be available at `http://localhost:8000`.
+
+3.  Start the FastAPI development server:
+    ```sh
+    uvicorn main_backend.fastapi_app:app --reload
+    ```
+    The FastAPI application will be available at `http://localhost:8000`.
+
+## Technologies Used
+
+### Frontend
+
+-   **React:** A JavaScript library for building user interfaces.
+-   **Vite:** A fast build tool and development server for modern web projects.
+-   **Tailwind CSS:** A utility-first CSS framework for rapid UI development.
+-   **shadcn/ui:** A collection of re-usable components for React.
+
+### Backend
+
+-   **Django:** A high-level Python web framework that encourages rapid development and clean, pragmatic design.
+-   **FastAPI:** A modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
+-   **Uvicorn:** An ASGI server implementation, for use with FastAPI.
+-   **MongoDB:** A NoSQL database used for storing application data, accessed via `pymongo` and `motor`.
+-   **SQLite:** The default database for Django, used for development and testing.
+
+## Conclusion
+
+This project serves as a comprehensive example of a modern full-stack application. It is currently in a testing phase, with plans for future global deployment.
