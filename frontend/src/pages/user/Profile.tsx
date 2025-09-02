@@ -15,12 +15,14 @@ import {
   User, Mail, Phone, Lock, Bell, Shield, 
   Camera, Save, Trash2, Settings
 } from 'lucide-react';
+import ChangePassword from '@/components/ChangePassword';
 
 const Profile = () => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
   
   const [profileData, setProfileData] = useState({
     fullName: user?.fullName || '',
@@ -43,12 +45,34 @@ const Profile = () => {
     setIsEditing(false);
   };
 
-  const handleDeleteAccount = () => {
-    toast({
-      title: "Account Deletion",
-      description: "Please contact support to delete your account.",
-      variant: "destructive",
-    });
+  const handleDeleteAccount = async () => {
+    if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      try {
+        const response = await fetch('http://localhost:8000/api/delete-account/', {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        });
+
+        if (response.ok) {
+          logout();
+        } else {
+          const data = await response.json();
+          toast({
+            title: "Account Deletion Failed",
+            description: data.error || "An error occurred.",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        toast({
+          title: "Account Deletion Failed",
+          description: "An error occurred. Please try again.",
+          variant: "destructive",
+        });
+      }
+    }
   };
 
   return (
@@ -238,10 +262,15 @@ const Profile = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button variant="outline" className="w-full">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => setShowChangePassword(!showChangePassword)}
+              >
                 <Lock className="h-4 w-4 mr-2" />
-                Change Password
+                {showChangePassword ? 'Cancel' : 'Change Password'}
               </Button>
+              {showChangePassword && <ChangePassword />}
               <Button 
                 variant="destructive" 
                 className="w-full"

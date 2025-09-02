@@ -13,6 +13,7 @@ import UserDashboard from "./pages/user/UserDashboard";
 import MyDoctors from "./pages/user/MyDoctors";
 import History from "./pages/user/History";
 import Profile from "./pages/user/Profile";
+import VideoConference from "./pages/user/VideoConference";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ManageDoctors from "./pages/admin/ManageDoctors";
 import ManageUsers from "./pages/admin/ManageUsers";
@@ -45,6 +46,7 @@ const App = () => (
                 <Route path="doctors" element={<MyDoctors />} />
                 <Route path="history" element={<History />} />
                 <Route path="profile" element={<Profile />} />
+                <Route path="video-conference" element={<VideoConference />} />
               </Route>
 
               {/* Admin Routes */}

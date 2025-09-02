@@ -1,12 +1,14 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Session, ChatMessage, User, Doctor
 from .serializers import UserSerializer, DoctorSerializer, SessionSerializer, ChatMessageSerializer
 import json
+from rest_framework.authtoken.models import Token
 
 @api_view(['POST'])
 def register(request):
@@ -34,8 +36,9 @@ def user_login(request):
     user = authenticate(request, username=request.data['email'], password=request.data['password'])
     if user is not None:
         login(request, user)
+        token, created = Token.objects.get_or_create(user=user)
         serializer = UserSerializer(user)
-        return Response(serializer.data)
+        return Response({'token': token.key, 'user': serializer.data})
     return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -78,6 +81,34 @@ def get_chat_history(request, session_id):
     messages = ChatMessage.objects.filter(session_id=session_id).order_by('timestamp')
     serializer = ChatMessageSerializer(messages, many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    user = request.user
+    old_password = request.data.get('old_password')
+    new_password = request.data.get('new_password')
+    confirm_password = request.data.get('confirm_password')
+
+    if not all([old_password, new_password, confirm_password]):
+        return Response({'error': 'All fields are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if not user.check_password(old_password):
+        return Response({'error': 'Invalid old password.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if new_password != confirm_password:
+        return Response({'error': 'New passwords do not match.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user.set_password(new_password)
+    user.save()
+    return Response({'message': 'Password changed successfully.'})
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_account(request):
+    user = request.user
+    user.delete()
+    return Response({'message': 'Account deleted successfully.'})
 
 @api_view(['POST'])
 def chat(request):

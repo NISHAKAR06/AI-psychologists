@@ -46,7 +46,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Check for stored user on app load
     const storedUser = localStorage.getItem('healspace_user');
-    if (storedUser) {
+    const token = localStorage.getItem('access_token');
+    if (storedUser && token) {
       setUser(JSON.parse(storedUser));
     }
     setIsLoading(false);
@@ -65,13 +66,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (response.ok) {
         const data = await response.json();
         const newUser: User = {
-          id: data.id,
-          email: data.email,
-          fullName: data.first_name,
-          role: data.user_type,
+          id: data.user.id,
+          email: data.user.email,
+          fullName: data.user.first_name,
+          role: data.user.user_type,
         };
         setUser(newUser);
         localStorage.setItem('healspace_user', JSON.stringify(newUser));
+        localStorage.setItem('access_token', data.token);
         return true;
       }
       return false;
@@ -101,13 +103,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (response.ok) {
         const data = await response.json();
         const newUser: User = {
-          id: data.id,
-          email: data.email,
-          fullName: data.first_name,
-          role: data.user_type,
+          id: data.user.id,
+          email: data.user.email,
+          fullName: data.user.first_name,
+          role: data.user.user_type,
         };
         setUser(newUser);
         localStorage.setItem('healspace_user', JSON.stringify(newUser));
+        localStorage.setItem('access_token', data.token);
         return true;
       }
       return false;
@@ -132,6 +135,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setUser(null);
       localStorage.removeItem('healspace_user');
+      localStorage.removeItem('access_token');
     }
   };
 

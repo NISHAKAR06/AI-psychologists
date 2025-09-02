@@ -3,7 +3,10 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        await self.accept()
+        if self.scope['user'].is_authenticated:
+            await self.accept()
+        else:
+            await self.close()
 
     async def disconnect(self, close_code):
         pass

@@ -11,4 +11,6 @@ urlpatterns = [
     path('sessions/<uuid:session_id>/', views.get_session),
     path('chat/history/<uuid:session_id>/', views.get_chat_history),
     path('chat/', views.chat),
+    path('change-password/', views.change_password),
+    path('delete-account/', views.delete_account),
 ]

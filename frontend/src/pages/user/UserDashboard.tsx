@@ -10,6 +10,7 @@ import {
   Heart, Clock, Calendar, Video, MessageCircle, 
   Activity, TrendingUp, Users, Phone, Stethoscope 
 } from 'lucide-react';
+import Chat from '@/components/Chat';
 
 const UserDashboard = () => {
   const { t } = useTranslation();
@@ -121,10 +122,12 @@ const UserDashboard = () => {
             </p>
           </div>
           <div className="flex items-center space-x-4 mt-4 lg:mt-0">
-            <Button className="gradient-primary">
-              <Video className="h-4 w-4 mr-2" />
-              Quick Consultation
-            </Button>
+            <Link to="/dashboard/video-conference">
+              <Button className="gradient-primary">
+                <Video className="h-4 w-4 mr-2" />
+                Quick Consultation
+              </Button>
+            </Link>
             <Button variant="outline">
               <Calendar className="h-4 w-4 mr-2" />
               Book Appointment
@@ -228,75 +231,51 @@ const UserDashboard = () => {
         </Card>
       </motion.div>
 
-      {/* Recent Activity */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
-      >
-        <Card className="glass-effect">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <Activity className="h-5 w-5 text-primary" />
-              <span>{t('recentActivity')}</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentActivity.map((activity, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 rounded-lg bg-accent/10"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 rounded-full bg-primary/20">
-                      {activity.type === 'consultation' && <Video className="h-4 w-4 text-primary" />}
-                      {activity.type === 'message' && <MessageCircle className="h-4 w-4 text-primary" />}
-                      {activity.type === 'appointment' && <Calendar className="h-4 w-4 text-primary" />}
+      {/* Chat and Recent Activity */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <Chat />
+        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <Card className="glass-effect h-full">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Activity className="h-5 w-5 text-primary" />
+                <span>{t('recentActivity')}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {recentActivity.map((activity, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 rounded-lg bg-accent/10"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 rounded-full bg-primary/20">
+                        {activity.type === 'consultation' && <Video className="h-4 w-4 text-primary" />}
+                        {activity.type === 'message' && <MessageCircle className="h-4 w-4 text-primary" />}
+                        {activity.type === 'appointment' && <Calendar className="h-4 w-4 text-primary" />}
+                      </div>
+                      <div>
+                        <p className="font-medium">
+                          {activity.type.charAt(0).toUpperCase() + activity.type.slice(1)} with {activity.doctor}
+                        </p>
+                        <p className="text-sm text-muted-foreground">{activity.time}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium">
-                        {activity.type.charAt(0).toUpperCase() + activity.type.slice(1)} with {activity.doctor}
-                      </p>
-                      <p className="text-sm text-muted-foreground">{activity.time}</p>
-                    </div>
+                    <Badge variant="outline">{activity.status}</Badge>
                   </div>
-                  <Badge variant="outline">{activity.status}</Badge>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Quick Actions */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-      >
-        <Card className="glass-effect gradient-primary text-white">
-          <CardContent className="p-8">
-            <div className="text-center">
-              <Heart className="h-12 w-12 mx-auto mb-4 floating-animation" />
-              <h3 className="text-2xl font-bold mb-2">Need Immediate Care?</h3>
-              <p className="mb-6 opacity-90">
-                Our doctors are available 24/7 for urgent consultations
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button variant="secondary" size="lg">
-                  <Phone className="h-4 w-4 mr-2" />
-                  Emergency Call
-                </Button>
-                <Button variant="outline" size="lg" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
-                  <Video className="h-4 w-4 mr-2" />
-                  Instant Video Call
-                </Button>
+                ))}
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
     </div>
   );
 };
