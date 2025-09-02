@@ -4,14 +4,15 @@ from .models import User, Doctor, Session, ChatMessage
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'user_type']
+        fields = ['id', 'first_name', 'email', 'password', 'user_type']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(
             email=validated_data['email'],
             password=validated_data['password'],
-            username=validated_data['username'],
+            username=validated_data['email'],  # Ensure username is unique and valid
+            first_name=validated_data.get('first_name', ''),
             user_type=validated_data.get('user_type', 'user')
         )
         return user

@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const newUser: User = {
           id: data.id,
           email: data.email,
-          fullName: data.username,
+          fullName: data.first_name,
           role: data.user_type,
         };
         setUser(newUser);
@@ -92,7 +92,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: data.fullName,
+          first_name: data.fullName,
           email: data.email,
           password: data.password,
           user_type: data.role,
@@ -103,7 +103,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const newUser: User = {
           id: data.id,
           email: data.email,
-          fullName: data.username,
+          fullName: data.first_name,
           role: data.user_type,
         };
         setUser(newUser);

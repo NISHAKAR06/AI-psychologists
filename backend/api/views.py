@@ -31,10 +31,7 @@ def register(request):
 
 @api_view(['POST'])
 def user_login(request):
-    user = authenticate(
-        email=request.data['email'],
-        password=request.data['password']
-    )
+    user = authenticate(request, username=request.data['email'], password=request.data['password'])
     if user is not None:
         login(request, user)
         serializer = UserSerializer(user)

@@ -52,19 +52,18 @@ These instructions will get you a copy of the project up and running on your loc
     pip install -r requirements.txt
     ```
 
+### Database Setup
+
+1.  Navigate to the `backend` directory:
+    ```sh
+    cd backend
+    ```
+2.  Apply the database migrations:
+    ```sh
+    python manage.py migrate
+    ```
+
 ## Running the application
-
-**Frontend**
-
-1.  Navigate to the `frontend` directory:
-    ```sh
-    cd frontend
-    ```
-2.  Start the development server:
-    ```sh
-    npm run dev
-    ```
-    The application will be available at `http://localhost:5173`.
 
 **Backend**
 
@@ -78,11 +77,23 @@ These instructions will get you a copy of the project up and running on your loc
     ```
     The Django API will be available at `http://localhost:8000`.
 
-3.  Start the FastAPI development server:
+3.  In a separate terminal, start the FastAPI development server:
     ```sh
-    uvicorn main_backend.fastapi_app:app --reload
+    uvicorn main_backend.fastapi_app:app --reload --port 8001
     ```
-    The FastAPI application will be available at `http://localhost:8000`.
+    The FastAPI application will be available at `http://localhost:8001`.
+
+**Frontend**
+
+1.  In a separate terminal, navigate to the `frontend` directory:
+    ```sh
+    cd frontend
+    ```
+2.  Start the development server:
+    ```sh
+    npm run dev
+    ```
+    The application will be available at `http://localhost:5173` (or another port if 5173 is in use).
 
 ## Technologies Used
 
@@ -98,7 +109,6 @@ These instructions will get you a copy of the project up and running on your loc
 -   **Django:** A high-level Python web framework that encourages rapid development and clean, pragmatic design.
 -   **FastAPI:** A modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
 -   **Uvicorn:** An ASGI server implementation, for use with FastAPI.
--   **MongoDB:** A NoSQL database used for storing application data, accessed via `pymongo` and `motor`.
 -   **SQLite:** The default database for Django, used for development and testing.
 
 ## Conclusion
