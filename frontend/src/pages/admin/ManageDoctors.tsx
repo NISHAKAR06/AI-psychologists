@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar } from '@/components/ui/avatar';
 import { 
   Search, Plus, Edit, Trash2, UserCheck, UserX, 
   Star, Stethoscope, Users, Calendar, Phone, Mail
@@ -26,7 +26,6 @@ const ManageDoctors = () => {
       specialty: 'Cardiology',
       rating: 4.9,
       status: 'active',
-      avatar: 'SJ',
       patients: 45,
       consultations: 234,
       joinDate: '2023-01-15',
@@ -40,7 +39,6 @@ const ManageDoctors = () => {
       specialty: 'General Medicine',
       rating: 4.8,
       status: 'active',
-      avatar: 'MC',
       patients: 52,
       consultations: 189,
       joinDate: '2023-02-20',
@@ -54,7 +52,6 @@ const ManageDoctors = () => {
       specialty: 'Dermatology',
       rating: 4.7,
       status: 'inactive',
-      avatar: 'ER',
       patients: 38,
       consultations: 156,
       joinDate: '2023-03-10',
@@ -68,7 +65,6 @@ const ManageDoctors = () => {
       specialty: 'Pediatrics',
       rating: 4.9,
       status: 'active',
-      avatar: 'JW',
       patients: 67,
       consultations: 298,
       joinDate: '2022-11-05',
@@ -188,9 +184,7 @@ const ManageDoctors = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                   <div className="flex items-center space-x-4">
                     <Avatar className="h-16 w-16">
-                      <AvatarFallback className="bg-primary text-primary-foreground text-lg">
-                        {doctor.avatar}
-                      </AvatarFallback>
+                      <img src={`https://api.dicebear.com/8.x/adventurer/svg?seed=${doctor.id}`} alt={doctor.name} className="rounded-full" />
                     </Avatar>
                     
                     <div className="flex-1">

@@ -179,7 +179,7 @@ const Landing = () => {
             <h3 className="text-xl font-bold">HealSpace</h3>
           </div>
           <p className="text-muted-foreground">
-            © 2024 HealSpace. All rights reserved. Your health, our priority.
+            © 2025 HealSpace. All rights reserved. Your health, our priority.
           </p>
         </div>
       </footer>

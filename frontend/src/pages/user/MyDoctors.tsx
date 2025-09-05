@@ -5,11 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar } from '@/components/ui/avatar';
 import { 
-  Search, Video, MessageCircle, Phone, Star, Filter,
+  Search, Video, Star, Filter,
   Clock, Calendar, Stethoscope, Heart, Users
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const MyDoctors = () => {
   const { t } = useTranslation();
@@ -22,7 +23,6 @@ const MyDoctors = () => {
       specialty: 'Cardiology',
       rating: 4.9,
       status: 'online',
-      avatar: 'SJ',
       nextAppointment: 'Today, 3:00 PM',
       totalConsultations: 12,
       lastConsultation: '2 days ago'
@@ -33,7 +33,6 @@ const MyDoctors = () => {
       specialty: 'General Medicine',
       rating: 4.8,
       status: 'online',
-      avatar: 'MC',
       nextAppointment: 'Tomorrow, 10:00 AM',
       totalConsultations: 8,
       lastConsultation: '1 week ago'
@@ -44,7 +43,6 @@ const MyDoctors = () => {
       specialty: 'Dermatology',
       rating: 4.7,
       status: 'busy',
-      avatar: 'ER',
       nextAppointment: 'Friday, 2:00 PM',
       totalConsultations: 5,
       lastConsultation: '3 days ago'
@@ -55,7 +53,6 @@ const MyDoctors = () => {
       specialty: 'Pediatrics',
       rating: 4.9,
       status: 'offline',
-      avatar: 'JW',
       nextAppointment: 'Next Monday, 11:00 AM',
       totalConsultations: 15,
       lastConsultation: '1 day ago'
@@ -150,9 +147,7 @@ const MyDoctors = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                   <div className="flex items-center space-x-4">
                     <Avatar className="h-16 w-16">
-                      <AvatarFallback className="bg-primary text-primary-foreground text-lg">
-                        {doctor.avatar}
-                      </AvatarFallback>
+                      <img src={`https://api.dicebear.com/8.x/adventurer/svg?seed=${doctor.id}`} alt={doctor.name} className="rounded-full" />
                     </Avatar>
                     
                     <div className="flex-1">
@@ -195,18 +190,12 @@ const MyDoctors = () => {
                     </div>
                     
                     <div className="flex space-x-2">
-                      <Button size="sm" variant="outline">
-                        <MessageCircle className="h-4 w-4 mr-1" />
-                        Chat
-                      </Button>
-                      <Button size="sm" variant="outline">
-                        <Phone className="h-4 w-4 mr-1" />
-                        Call
-                      </Button>
-                      <Button size="sm" className="gradient-primary">
-                        <Video className="h-4 w-4 mr-1" />
-                        Video
-                      </Button>
+                      <Link to="/dashboard/video-conference">
+                        <Button size="sm" className="gradient-primary">
+                          <Video className="h-4 w-4 mr-1" />
+                          Video
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>

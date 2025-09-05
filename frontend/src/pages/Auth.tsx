@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
@@ -15,9 +15,16 @@ import { toast } from '@/hooks/use-toast';
 
 const Auth = () => {
   const { t } = useTranslation();
-  const { login, register, isLoading } = useAuth();
+  const { login, register, isLoading, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const redirectPath = user.role === 'admin' ? '/admin' : '/dashboard';
+      navigate(redirectPath, { replace: true });
+    }
+  }, [isAuthenticated, user, navigate]);
+
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',

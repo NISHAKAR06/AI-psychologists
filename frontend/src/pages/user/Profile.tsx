@@ -34,7 +34,7 @@ const Profile = () => {
     email: true,
     sms: false,
     push: true,
-    appointments: true,
+    
   });
 
   const handleSave = () => {

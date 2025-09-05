@@ -1,16 +1,19 @@
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { 
-  Heart, Clock, Calendar, Video, MessageCircle, 
-  Activity, TrendingUp, Users, Phone, Stethoscope 
-} from 'lucide-react';
-import Chat from '@/components/Chat';
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar } from "@/components/ui/avatar";
+import {
+  Clock,
+  Calendar,
+  Video,
+  Activity,
+  Users,
+  Stethoscope,
+} from "lucide-react";
 
 const UserDashboard = () => {
   const { t } = useTranslation();
@@ -19,89 +22,78 @@ const UserDashboard = () => {
   // Mock data - replace with real API calls
   const stats = [
     {
-      title: 'Available Doctors',
-      value: '12',
+      title: "Available Doctors",
+      value: "12",
       icon: Users,
-      change: '+2 from yesterday',
-      color: 'text-primary'
+      change: "+2 from yesterday",
+      color: "text-primary",
     },
     {
-      title: 'Upcoming Appointments',
-      value: '3',
-      icon: Calendar,
-      change: 'Next in 2 hours',
-      color: 'text-success'
-    },
-    {
-      title: 'Consultation Hours',
-      value: '24.5h',
+      title: "Consultation Hours",
+      value: "24.5h",
       icon: Clock,
-      change: '+5h this month',
-      color: 'text-warning'
+      change: "+5h this month",
+      color: "text-warning",
     },
     {
-      title: 'Health Score',
-      value: '92%',
+      title: "Health Score",
+      value: "92%",
       icon: Activity,
-      change: '+8% improvement',
-      color: 'text-success'
-    }
+      change: "+8% improvement",
+      color: "text-success",
+    },
   ];
 
   const availableDoctors = [
     {
-      id: '1',
-      name: 'Dr. Sarah Johnson',
-      specialty: 'Cardiology',
+      id: "1",
+      name: "Dr. Sarah Johnson",
+      specialty: "Cardiology",
       rating: 4.9,
-      status: 'online',
-      avatar: 'SJ'
+      status: "online",
     },
     {
-      id: '2', 
-      name: 'Dr. Michael Chen',
-      specialty: 'General Medicine',
+      id: "2",
+      name: "Dr. Michael Chen",
+      specialty: "General Medicine",
       rating: 4.8,
-      status: 'online',
-      avatar: 'MC'
+      status: "online",
     },
     {
-      id: '3',
-      name: 'Dr. Emily Rodriguez',
-      specialty: 'Dermatology',
+      id: "3",
+      name: "Dr. Emily Rodriguez",
+      specialty: "Dermatology",
       rating: 4.7,
-      status: 'busy',
-      avatar: 'ER'
+      status: "busy",
     },
     {
-      id: '4',
-      name: 'Dr. James Wilson',
-      specialty: 'Pediatrics',
+      id: "4",
+      name: "Dr. James Wilson",
+      specialty: "Pediatrics",
       rating: 4.9,
-      status: 'online',
-      avatar: 'JW'
-    }
+      status: "online",
+    },
   ];
 
   const recentActivity = [
     {
-      type: 'consultation',
-      doctor: 'Dr. Sarah Johnson',
-      time: '2 hours ago',
-      status: 'completed'
+      type: "consultation",
+      doctor: "Dr. Sarah Johnson",
+      time: "2 hours ago",
+      status: "completed",
     },
     {
-      type: 'message',
-      doctor: 'Dr. Michael Chen',
-      time: '1 day ago',
-      status: 'read'
+      type: "consultation",
+      doctor: "Dr. Michael Chen",
+      time: "1 day ago",
+      status: "completed",
     },
     {
-      type: 'appointment',
-      doctor: 'Dr. Emily Rodriguez',
-      time: '3 days ago',
-      status: 'scheduled'
-    }
+      type: "consultation",
+      doctor: "Dr. Emily Rodriguez",
+      time: "3 days ago",
+      status: "completed",
+    },
   ];
 
   return (
@@ -115,7 +107,7 @@ const UserDashboard = () => {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
-              {t('welcomeBack')}, {user?.fullName}!
+              {t("welcomeBack")}, {user?.fullName}!
             </h1>
             <p className="text-muted-foreground mt-2">
               Here's your health dashboard overview
@@ -128,10 +120,12 @@ const UserDashboard = () => {
                 Quick Consultation
               </Button>
             </Link>
-            <Button variant="outline">
-              <Calendar className="h-4 w-4 mr-2" />
-              Book Appointment
-            </Button>
+            <Link to="/dashboard/history">
+              <Button variant="outline">
+                <Clock className="h-4 w-4 mr-2" />
+                View History
+              </Button>
+            </Link>
           </div>
         </div>
       </motion.div>
@@ -157,7 +151,9 @@ const UserDashboard = () => {
                       {stat.change}
                     </p>
                   </div>
-                  <div className={`p-2 rounded-full bg-accent/20 ${stat.color}`}>
+                  <div
+                    className={`p-2 rounded-full bg-accent/20 ${stat.color}`}
+                  >
                     <stat.icon className="h-6 w-6" />
                   </div>
                 </div>
@@ -178,7 +174,7 @@ const UserDashboard = () => {
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center space-x-2">
                 <Stethoscope className="h-5 w-5 text-primary" />
-                <span>{t('availableDoctors')}</span>
+                <span>{t("availableDoctors")}</span>
               </CardTitle>
               <Link to="/dashboard/doctors">
                 <Button variant="outline" size="sm">
@@ -196,17 +192,25 @@ const UserDashboard = () => {
                 >
                   <div className="flex items-center space-x-3">
                     <Avatar className="h-12 w-12">
-                      <AvatarFallback className="bg-primary text-primary-foreground">
-                        {doctor.avatar}
-                      </AvatarFallback>
+                      <img
+                        src={`https://api.dicebear.com/8.x/adventurer/svg?seed=${doctor.id}`}
+                        alt={doctor.name}
+                        className="rounded-full"
+                      />
                     </Avatar>
                     <div>
                       <h3 className="font-semibold">{doctor.name}</h3>
-                      <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {doctor.specialty}
+                      </p>
                       <div className="flex items-center space-x-2 mt-1">
-                        <Badge 
-                          variant={doctor.status === 'online' ? 'default' : 'secondary'}
-                          className={doctor.status === 'online' ? 'bg-success' : ''}
+                        <Badge
+                          variant={
+                            doctor.status === "online" ? "default" : "secondary"
+                          }
+                          className={
+                            doctor.status === "online" ? "bg-success" : ""
+                          }
                         >
                           {doctor.status}
                         </Badge>
@@ -217,12 +221,11 @@ const UserDashboard = () => {
                     </div>
                   </div>
                   <div className="flex space-x-2">
-                    <Button size="sm" variant="outline">
-                      <MessageCircle className="h-4 w-4" />
-                    </Button>
-                    <Button size="sm" className="gradient-primary">
-                      <Video className="h-4 w-4" />
-                    </Button>
+                    <Link to="/dashboard/video-conference">
+                      <Button size="sm" className="gradient-primary">
+                        <Video className="h-4 w-4" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -231,12 +234,10 @@ const UserDashboard = () => {
         </Card>
       </motion.div>
 
-      {/* Chat and Recent Activity */}
+      {/* Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <Chat />
-        </div>
         <motion.div
+          className="lg:col-span-3"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
@@ -245,7 +246,7 @@ const UserDashboard = () => {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Activity className="h-5 w-5 text-primary" />
-                <span>{t('recentActivity')}</span>
+                <span>{t("recentActivity")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -257,15 +258,17 @@ const UserDashboard = () => {
                   >
                     <div className="flex items-center space-x-3">
                       <div className="p-2 rounded-full bg-primary/20">
-                        {activity.type === 'consultation' && <Video className="h-4 w-4 text-primary" />}
-                        {activity.type === 'message' && <MessageCircle className="h-4 w-4 text-primary" />}
-                        {activity.type === 'appointment' && <Calendar className="h-4 w-4 text-primary" />}
+                        <Video className="h-4 w-4 text-primary" />
                       </div>
                       <div>
                         <p className="font-medium">
-                          {activity.type.charAt(0).toUpperCase() + activity.type.slice(1)} with {activity.doctor}
+                          {activity.type.charAt(0).toUpperCase() +
+                            activity.type.slice(1)}{" "}
+                          with {activity.doctor}
                         </p>
-                        <p className="text-sm text-muted-foreground">{activity.time}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {activity.time}
+                        </p>
                       </div>
                     </div>
                     <Badge variant="outline">{activity.status}</Badge>

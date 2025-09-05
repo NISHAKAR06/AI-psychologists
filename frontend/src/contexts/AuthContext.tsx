@@ -136,6 +136,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(null);
       localStorage.removeItem('healspace_user');
       localStorage.removeItem('access_token');
+      window.location.href = '/auth';
     }
   };
 

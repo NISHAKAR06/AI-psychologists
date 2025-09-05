@@ -1,4 +1,4 @@
-# AI-Psychologists
+# Healspace
 
 This is a full-stack web application that provides a platform for users to interact with AI-powered psychologists. The application is built with a React frontend and a Python backend using Django and FastAPI.
 
